@@ -1,0 +1,25 @@
+.location-section {
+  padding: 10px;
+  margin: 10px;
+  border: 1px black solid;
+}
+
+.location-action {
+  text-decoration: underline;
+}
+
+.location-message-ok {
+  background: lightgreen;
+}
+
+.location-message-error {
+  background: pink;
+}
+
+.location-message-waiting {
+  background: lightyellow;
+}
+
+.location-display-none {
+  display: none;
+}
