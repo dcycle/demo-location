@@ -1,7 +1,11 @@
-.location-section {
+main {
   padding: 10px;
-  margin: 10px;
+}
+
+.location-section {
   border: 1px black solid;
+  margin: 10px 0;
+  padding: 10px;
 }
 
 .location-action {

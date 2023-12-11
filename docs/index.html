@@ -1,5 +1,3 @@
----
----
 <!doctype html>
 <html>
   <head>
@@ -7,36 +5,31 @@
     <link rel="stylesheet" href="style.css?token={{ site.time | date: '%s' }}">
   </head>
   <body>
-    <h1>Demo: how to get a user's location (build 8)</h1>
-    <div id="location-mock-vs-real" class="location-section">
-      ...
-    </div>
-    <div id="location-user-facing" class="location-section">
-      ...
-    </div>
-    <div id="location-action" class="location-section">
-      ...
-    </div>
-    <div id="location-display" class="location-section">
-      ...
-    </div>
-    <h2>Resetting the geolocation permission</h2>
-    <p>When this page is loaded, we will attempt to check if geolocation permission has been previously given, or denied.</p>
-    <p>To simulate the case where it has never been given or denied, we can do the following:</p>
-    <ul>
-      <li>In Chrome, go to Privacy and security &gt; Site Settings &gt; Location, then click the trash icon next to the website.</li>
-      <li>In Firefox, go to Preferences, then search for "Location", then click Settings next to Location, then remove the website.</li>
-      <li>In Safari, click Settings, then Websites, then Location, then either remove the website or set it to "Ask".</li>
-    </ul>
-    <h2>Resources</h2>
-    <ul>
-      <li><a href="https://stackoverflow.com/questions/77635774">The web permissions API revoke() method is deprecated; what is the best way to revoke a permission such as 'geolocation'?, StackOverflow, Dec. 10, 2023</a></li>
-    </ul>
-    <script src="MyCustomScript.js?token={{ site.time | date: '%s' }}"></script>
-    <script src="MyLocation.js?token={{ site.time | date: '%s' }}"></script>
+    <main>
+      <h1>Demo: how to get a user's location (build 9)</h1>
+      <h2>See <a href="https://github.com/dcycle/demo-location">the README for details</a>.</h2>
+      <!-- Information about whether we are using the mock or real backend. -->
+      <div id="location-mock-vs-real" class="location-section">
+        ...
+      </div>
+      <!-- User facing messages. -->
+      <div id="location-user-facing" class="location-section">
+        ...
+      </div>
+      <!-- A button the user can press. -->
+      <div id="location-action" class="location-section">
+        ...
+      </div>
+      <!-- The actual coordinates. -->
+      <div id="location-display" class="location-section">
+        ...
+      </div>
+    </main>
+    <script src="MyLocationCustomSettings.js"></script>
+    <script src="MyLocation.js"></script>
     <script>
       MyLocation
-        .customize(MyCustomScript)
+        .customize(MyLocationCustomSettings)
         .init();
     </script>
   </body>
