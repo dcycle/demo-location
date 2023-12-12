@@ -88,6 +88,7 @@ MyLocationCustomUI = {
   },
   promptSuccess: function(location) {
     this.hideButton();
+    this.log('Successfully got your coordinates.', 'ok', 'user-facing');
     const text = location.coords.latitude + ', ' + location.coords.longitude + ' with accuracy ' + location.coords.accuracy;
     const element = document.getElementById('location-display');
     element.innerHTML = text;

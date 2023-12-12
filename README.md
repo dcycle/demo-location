@@ -69,24 +69,18 @@ Feature: check permissions
 
 We are using the Permissions API to figure out if we have access, or should not have access, to the user's location.
 
+Resetting the geolocation permission
+-----
 
+When this page is loaded, we will attempt to check if geolocation permission has been previously given, or denied.
 
+To simulate the case where it has never been given or denied, we can do the following:
 
+* In Chrome, go to Privacy and security &gt; Site Settings &gt; Location, then click the trash icon next to the website.
+* In Firefox, go to Preferences, then search for "Location", then click Settings next to Location, then remove the website.
+* In Safari, click Settings, then Websites, then Location, then either remove the website or set it to "Ask".
 
+Resources
+-----
 
-
-
-
-
-    <h2>Resetting the geolocation permission</h2>
-    <p>When this page is loaded, we will attempt to check if geolocation permission has been previously given, or denied.</p>
-    <p>To simulate the case where it has never been given or denied, we can do the following:</p>
-    <ul>
-      <li>In Chrome, go to Privacy and security &gt; Site Settings &gt; Location, then click the trash icon next to the website.</li>
-      <li>In Firefox, go to Preferences, then search for "Location", then click Settings next to Location, then remove the website.</li>
-      <li>In Safari, click Settings, then Websites, then Location, then either remove the website or set it to "Ask".</li>
-    </ul>
-    <h2>Resources</h2>
-    <ul>
-      <li><a href="https://stackoverflow.com/questions/77635774">The web permissions API revoke() method is deprecated; what is the best way to revoke a permission such as 'geolocation'?, StackOverflow, Dec. 10, 2023</a></li>
-    </ul>
+* [The web permissions API revoke() method is deprecated; what is the best way to revoke a permission such as 'geolocation'?, StackOverflow, Dec. 10, 2023](https://stackoverflow.com/questions/77635774)
