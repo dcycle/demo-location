@@ -89,16 +89,6 @@ MyLocation = {
     }
     return this._backend;
   },
-  /**
-   * Log a message.
-   *
-   * Severity can be notice, ok, or error.
-   *
-   * Category can be debug or user-facing.
-   */
-  log: function(message, severity, category) {
-    this.ui().log(message, severity, category);
-  },
   prompt: function() {
     this.ui().waiting();
     this.backend().prompt();
@@ -141,25 +131,11 @@ MyLocation = {
  * defining a custom object and passing it to MyLocation.customize().
  */
 MyLocationDefaultCustomUI = {
-  /**
-   * Log information.
-   *
-   * @param {*} message
-   *   The actual message as an untranslated string, for example,
-   *   "Hello my name is %s".
-   * @param {*} severity
-   *   Can be "info", "error" or "notice".
-   * @param {*} category
-   *   A category for the message, "user-facing" or "debug".
-   */
   debug: function(message) {
     console.log('[location debug] ' + message);
   },
   waiting: function() {
     console.log('Waiting for permission to use location.');
-  },
-  log: function(message, severity, category) {
-    console.log('[' + category + '] [' + severity + '] ' + message);
   },
   informBackendChange: function(label) {
     console.log('Now using ' + label);
