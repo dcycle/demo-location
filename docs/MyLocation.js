@@ -1,6 +1,8 @@
 /**
  * Encompasses functionality for getting my location. For usage, see
  * index.html.
+ *
+ * See https://github.com/dcycle/demo-location.
  */
 MyLocation = {
   /**
