@@ -35,10 +35,10 @@ MyLocation = {
     }
   },
   promptSuccess: function(position) {
-    this.ui().promptSuccess(position);
+    MyLocation.ui().promptSuccess(position);
   },
   promptFailure: function(failure) {
-    this.ui().promptFailure(failure);
+    MyLocation.ui().promptFailure(failure);
   },
   /**
    * Get the custom UI object to integrate with your web page.
