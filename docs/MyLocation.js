@@ -90,6 +90,7 @@ MyLocation = {
     this.log(message, 'notice', 'debug');
   },
   prompt: function() {
+    this.log('Waiting for permission to use location.', 'notice', 'user-facing');
     this.backend().prompt();
   },
   /**
@@ -193,7 +194,6 @@ MyLocationLiveBackend = {
     }).catch(e => MyLocation.reactToPermission('prompt'));
   },
   prompt: function() {
-    locationSetWaiting('Waiting for permission to use location.');
     // See
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition.
     try {
@@ -244,19 +244,22 @@ MyLocationMockBackend = {
     MyLocation.reactToPermission({state: this.permission()});
   },
   prompt: function() {
-    if (this.userAllow()) {
-      MyLocation.promptSuccess({
-        coords: {
-          latitude: Math.random() * 180 - 90,
-          longitude: Math.random() * 360 - 180,
-          accuracy: Math.floor(Math.random() * 100),
-        }
-      });
-    }
-    else {
-      MyLocation.promptFailure({
-        message: 'User denied access to location services.',
-      });
-    }
+    const that = this;
+    setTimeout(function() {
+      if (that.userAllow()) {
+        MyLocation.promptSuccess({
+          coords: {
+            latitude: Math.random() * 180 - 90,
+            longitude: Math.random() * 360 - 180,
+            accuracy: Math.floor(Math.random() * 100),
+          }
+        });
+      }
+      else {
+        MyLocation.promptFailure({
+          message: 'User denied access to location services.',
+        });
+      }
+    }, 2000);
   },
 }
