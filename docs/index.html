@@ -8,13 +8,16 @@
     <main>
       <h1>Demo: how to get a user's location (build 11)</h1>
       <h2>See <a href="https://github.com/dcycle/demo-location">the README for details</a>.</h2>
-      <!-- Whether we are using the live or mock interface. -->
+      <!-- Whether we are using the live or mock interface. Used by
+      MyLocationDevelopmentOnly.js. You would typically not use this
+      section on your projects. -->
       <div id="location-backend" class="location-section">
         ...
         <div id="location-backend-info">
         </div>
       </div>
-      <!-- User facing messages. -->
+      <!-- User facing messages, such as "waiting for coordinates",
+      "an error occurred", ... -->
       <div id="location-user-facing" class="location-section">
         ...
       </div>
@@ -27,11 +30,13 @@
         ...
       </div>
     </main>
+    <script src="MyLocationDevelopmentOnly.js"></script>
     <script src="MyLocationCustomUI.js"></script>
     <script src="MyLocation.js"></script>
     <script>
       MyLocation
         .customize(MyLocationCustomUI)
+        .customize(MyLocationDevelopmentOnly)
         .init();
     </script>
   </body>

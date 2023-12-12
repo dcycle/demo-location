@@ -10,9 +10,19 @@ MyLocation = {
    *
    * Your custom object can implement any method is which defined in the
    * MyLocationDefaultCustomUI object below.
+   *
+   * You can customize any number of times.
+   *
+   * Omit the argument to reset to the default UI.
    */
   customize: function(customUI) {
-    this._customUI = customUI;
+    let ui = this.ui();
+    if (typeof customUI === 'undefined') {
+      this._customUI = MyLocationDefaultCustomUI;
+    }
+    else {
+      this._customUI = {...ui, ...customUI};
+    }
     return this;
   },
   reactToPermission: function(permission) {
@@ -23,16 +33,18 @@ MyLocation = {
         break;
 
       case 'prompt':
-        this.debug("The permission is set to prompt, meaning that we can ask for the user's location.");
+        this.ui().debug("The permission is set to prompt, meaning that we can ask for the user's location.");
         this.ui().allowPrompting();
         break;
 
       case 'denied':
-        this.debug('Your browser does not seem to have access to location services, or the user has previously denied access. You might need to allow geolocaiton in your UI.');
+        this.promptFailure({
+          message: 'User denied access to location services.',
+        });
         break;
 
       default:
-        this.debug('When checking for permission, we got the unexpected state ' + permission.state + '.');
+        this.ui().debug('When checking for permission, we got the unexpected state ' + permission.state + '.');
         break;
     }
   },
@@ -45,15 +57,14 @@ MyLocation = {
   /**
    * Get the custom UI object to integrate with your web page.
    *
-   * If your custom object does not exist or does not implement any method
-   * defined in MyLocationDefaultCustomUI, below, then the method from
-   * MyLocationDefaultCustomUI will be used.
+   * This will include any customizations you have made using the customize()
+   * function.
    */
   ui: function() {
     if (typeof this._customUI === 'undefined') {
-      this._customUI = {};
+      this._customUI = MyLocationDefaultCustomUI;
     }
-    return {...MyLocationDefaultCustomUI, ...this._customUI};
+    return this._customUI;
   },
   /**
    * Set the backend. The backend is what actually does the work of getting
@@ -88,11 +99,8 @@ MyLocation = {
   log: function(message, severity, category) {
     this.ui().log(message, severity, category);
   },
-  debug: function(message) {
-    this.log(message, 'notice', 'debug');
-  },
   prompt: function() {
-    this.log('Waiting for permission to use location.', 'notice', 'user-facing');
+    this.ui().waiting();
     this.backend().prompt();
   },
   /**
@@ -101,12 +109,12 @@ MyLocation = {
    * MyLocation.useLiveBackend().
    */
   useLiveBackend: function() {
-    this.log('Using the live location services. You might want to try alternating between mock location services and real location services during local development by running MyLocation.useMock() and MyLocation.useReal().', 'ok', 'debug');
+    this.ui().debug('Using the live location services. You might want to try alternating between mock location services and real location services during local development by running MyLocation.useMock() and MyLocation.useReal().', 'ok', 'debug');
     this
       .setBackendAndInit(MyLocationLiveBackend);
   },
   useMockBackend: function() {
-    this.log('Using the mock location services. You might want to try alternating between mock location services and real location services during local development by running MyLocation.useMock() and MyLocation.useReal().', 'ok', 'debug');
+    this.ui().debug('Using the mock location services. You might want to try alternating between mock location services and real location services during local development by running MyLocation.useMock() and MyLocation.useReal().', 'ok', 'debug');
     this
       .setBackendAndInit(MyLocationMockBackend);
   },
@@ -116,9 +124,9 @@ MyLocation = {
   init: function() {
     this.ui().init();
     this.backend().init();
-    this.log('Ready.', 'ok', 'user-facing');
+    this.ui().debug('Ready.', 'ok', 'user-facing');
     if (!this.backend().https()) {
-      this.log('We cannot use location services over http. Please use https.', 'error', 'user-facing');
+      this.ui().cannotGetLocation('We cannot use location services over http. Please use https.');
       this.ui().fatal();
     }
     else {
@@ -144,6 +152,12 @@ MyLocationDefaultCustomUI = {
    * @param {*} category
    *   A category for the message, "user-facing" or "debug".
    */
+  debug: function(message) {
+    console.log('[location debug] ' + message);
+  },
+  waiting: function() {
+    console.log('Waiting for permission to use location.');
+  },
   log: function(message, severity, category) {
     console.log('[' + category + '] [' + severity + '] ' + message);
   },
@@ -262,6 +276,6 @@ MyLocationMockBackend = {
           message: 'User denied access to location services.',
         });
       }
-    }, 2000);
+    }, 750);
   },
 }
