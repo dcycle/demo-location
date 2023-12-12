@@ -8,9 +8,11 @@
     <main>
       <h1>Demo: how to get a user's location (build 9)</h1>
       <h2>See <a href="https://github.com/dcycle/demo-location">the README for details</a>.</h2>
-      <!-- Information about whether we are using the mock or real backend. -->
-      <div id="location-mock-vs-real" class="location-section">
+      <!-- Whether we are using the live or mock interface. -->
+      <div id="location-backend" class="location-section">
         ...
+        <div id="location-backend-info">
+        </div>
       </div>
       <!-- User facing messages. -->
       <div id="location-user-facing" class="location-section">
@@ -25,11 +27,11 @@
         ...
       </div>
     </main>
-    <script src="MyLocationCustomSettings.js"></script>
+    <script src="MyLocationCustomUI.js"></script>
     <script src="MyLocation.js"></script>
     <script>
       MyLocation
-        .customize(MyLocationCustomSettings)
+        .customize(MyLocationCustomUI)
         .init();
     </script>
   </body>
