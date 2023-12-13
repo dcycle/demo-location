@@ -1,6 +1,8 @@
 MyLocationCustomUI = {
   cannotGetLocation: function(message) {
-    this.setMessage('Could not get your location: ' + message, 'error');
+    this.hideButton();
+    this.fatal();
+    this.setMessage('Could not get your location: ' + message.message, 'error');
   },
   waiting: function() {
     this.setMessage('Waiting for permission to use location.', 'notice');
@@ -26,30 +28,9 @@ MyLocationCustomUI = {
     const element = document.getElementById('location-display');
     element.innerHTML = text;
   },
-
-  /**
-   * Log information.
-   *
-   * @param {*} message
-   *   The actual message as an untranslated string, for example,
-   *   "Hello my name is %s".
-   * @param {*} severity
-   *   Can be "info", "error" or "notice".
-   * @param {*} category
-   *   A category for the message, "user-facing" or "debug".
-   */
-  log: function(message, severity, category) {
-    alert(message);
-    if (category === 'debug') {
-      console.log('[DEBUG] ' + message);
-      return;
-    }
-    const element = document.getElementById('location-' + category);
-    element.classList.remove('location-message-ok');
-    element.classList.remove('location-message-error');
-    element.classList.remove('location-message-notice');
-    element.classList.add('location-message-' + severity);
-    element.innerHTML = message;
+  init: function() {
+    this.hideButton();
+    document.getElementById('location-display').innerHTML = 'We do not know your location.';
   },
   fatal: function() {
     this.hideButton();
@@ -62,17 +43,6 @@ MyLocationCustomUI = {
     const element = document.getElementById('location-action');
     element.classList.remove('location-display-none');
   },
-  init: function() {
-    this.hideButton();
-    document.getElementById('location-display').innerHTML = 'We do not know your location.';
-  },
-  promptSuccess: function(location) {
-  },
-  promptFailure: function(reason) {
-    this.hideButton();
-    this.fatal();
-    this.cannotGetLocation(reason.message);
-  }
 }
 
 MyLocationCustomUIPrompt = function() {

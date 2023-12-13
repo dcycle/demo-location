@@ -43,6 +43,14 @@ MyLocationDevelopmentOnly = {
     }
 
   },
+  init: function() {
+    this.displayVersionNumber();
+    MyLocationCustomUI.init();
+  },
+  displayVersionNumber: function() {
+    const element = document.getElementById('location-version-number');
+    element.innerHTML = MyLocation.version();
+  },
 }
 
 MyLocationDevelopmentOnlyUseMock = function() {

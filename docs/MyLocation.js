@@ -5,6 +5,9 @@
  * See https://github.com/dcycle/demo-location.
  */
 MyLocation = {
+  version: function() {
+    return '0.1.0';
+  },
   /**
    * Customize using a custom UI object to integrate with your web page.
    *
@@ -38,7 +41,7 @@ MyLocation = {
         break;
 
       case 'denied':
-        this.promptFailure({
+        this.ui().cannotGetLocation({
           message: 'User denied access to location services.',
         });
         break;
@@ -50,9 +53,6 @@ MyLocation = {
   },
   gotLocation: function(position) {
     MyLocation.ui().gotLocation(position);
-  },
-  promptFailure: function(failure) {
-    MyLocation.ui().promptFailure(failure);
   },
   /**
    * Get the custom UI object to integrate with your web page.
@@ -116,7 +116,9 @@ MyLocation = {
     this.backend().init();
     this.ui().debug('Ready.', 'ok', 'user-facing');
     if (!this.backend().https()) {
-      this.ui().cannotGetLocation('We cannot use location services over http. Please use https.');
+      this.ui().cannotGetLocation({
+        message: 'We cannot use location services over http. Please use https.',
+      });
       this.ui().fatal();
     }
     else {
@@ -161,7 +163,7 @@ MyLocationDefaultCustomUI = {
     console.log('Here is the location object:');
     console.log(location);
   },
-  promptFailure: function(failure) {
+  cannotGetLocation: function(failure) {
     console.log('Could not fetch the location due to:');
     console.log(failure);
   }
@@ -189,7 +191,7 @@ MyLocationLiveBackend = {
     // See
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition.
     try {
-      navigator.geolocation.getCurrentPosition(MyLocation.gotLocation, MyLocation.promptFailure, {
+      navigator.geolocation.getCurrentPosition(MyLocation.gotLocation, MyLocation.ui().cannotGetLocation, {
         maximumAge: 0,
         timeout: Infinity,
         enableHighAccuracy: false,
@@ -248,7 +250,7 @@ MyLocationMockBackend = {
         });
       }
       else {
-        MyLocation.promptFailure({
+        MyLocation.ui().cannotGetLocation({
           message: 'User denied access to location services.',
         });
       }
