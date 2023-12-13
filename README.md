@@ -80,6 +80,11 @@ To simulate the case where it has never been given or denied, we can do the foll
 * In Firefox, go to Preferences, then search for "Location", then click Settings next to Location, then remove the website.
 * In Safari, click Settings, then Websites, then Location, then either remove the website or set it to "Ask".
 
+Known issues
+-----
+
+* On Safari 17.1.2 on mac OS 14.1.2, if a user denies access to the location, and wants to remember the decision, the permissions API is set to prompt insteady of denied, which means that the "Request location" can stay visible, and when you click on it, nothing happens. Source: <https://stackoverflow.com/questions/77657005>.
+
 Resources
 -----
 
