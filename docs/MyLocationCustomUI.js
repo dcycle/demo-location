@@ -14,10 +14,17 @@ MyLocationCustomUI = {
     element.innerHTML = message;
   },
   canPromptForLocation: function() {
-
+    this.setMessage('Click below to allow us to use your location.', 'ok');
+    this.showButton();
+    document.getElementById('location-action').innerHTML = 'Click here to use your location.';
+    document.getElementById('location-action').onclick = MyLocationCustomUIPrompt;
   },
   gotLocation: function(location) {
-
+    this.hideButton();
+    this.setMessage('Successfully got your coordinates.', 'ok');
+    const text = location.coords.latitude + ', ' + location.coords.longitude + ' with accuracy ' + location.coords.accuracy;
+    const element = document.getElementById('location-display');
+    element.innerHTML = text;
   },
 
   /**
@@ -55,22 +62,11 @@ MyLocationCustomUI = {
     const element = document.getElementById('location-action');
     element.classList.remove('location-display-none');
   },
-  allowPrompting() {
-    this.setMessage('Click below to allow us to use your location.', 'ok');
-    this.showButton();
-    document.getElementById('location-action').innerHTML = 'Click here to use your location.';
-    document.getElementById('location-action').onclick = MyLocationCustomUIPrompt;
-  },
   init: function() {
     this.hideButton();
     document.getElementById('location-display').innerHTML = 'We do not know your location.';
   },
   promptSuccess: function(location) {
-    this.hideButton();
-    this.setMessage('Successfully got your coordinates.', 'ok');
-    const text = location.coords.latitude + ', ' + location.coords.longitude + ' with accuracy ' + location.coords.accuracy;
-    const element = document.getElementById('location-display');
-    element.innerHTML = text;
   },
   promptFailure: function(reason) {
     this.hideButton();

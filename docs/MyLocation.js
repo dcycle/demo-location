@@ -34,7 +34,7 @@ MyLocation = {
 
       case 'prompt':
         this.ui().debug("The permission is set to prompt, meaning that we can ask for the user's location.");
-        this.ui().allowPrompting();
+        this.ui().canPromptForLocation();
         break;
 
       case 'denied':
@@ -48,8 +48,8 @@ MyLocation = {
         break;
     }
   },
-  promptSuccess: function(position) {
-    MyLocation.ui().promptSuccess(position);
+  gotLocation: function(position) {
+    MyLocation.ui().gotLocation(position);
   },
   promptFailure: function(failure) {
     MyLocation.ui().promptFailure(failure);
@@ -151,13 +151,13 @@ MyLocationDefaultCustomUI = {
   fatal: function() {
     console.log('[fatal] cannot use location.');
   },
-  allowPrompting: function() {
+  canPromptForLocation: function() {
     // You can override this to have a button which allows the user to ask for
     // their location, instead of asking for it right away, which can be
     // obtrusive.
     MyLocation.prompt();
   },
-  promptSuccess: function(location) {
+  gotLocation: function(location) {
     console.log('Here is the location object:');
     console.log(location);
   },
@@ -189,7 +189,7 @@ MyLocationLiveBackend = {
     // See
     // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition.
     try {
-      navigator.geolocation.getCurrentPosition(MyLocation.promptSuccess, MyLocation.promptFailure, {
+      navigator.geolocation.getCurrentPosition(MyLocation.gotLocation, MyLocation.promptFailure, {
         maximumAge: 0,
         timeout: Infinity,
         enableHighAccuracy: false,
@@ -239,7 +239,7 @@ MyLocationMockBackend = {
     const that = this;
     setTimeout(function() {
       if (that.userAllow()) {
-        MyLocation.promptSuccess({
+        MyLocation.gotLocation({
           coords: {
             latitude: Math.random() * 180 - 90,
             longitude: Math.random() * 360 - 180,
