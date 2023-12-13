@@ -6,7 +6,7 @@
  */
 MyLocation = {
   version: function() {
-    return '0.2.0';
+    return '0.2.1';
   },
   /**
    * Customize using a custom UI object to integrate with your web page.
