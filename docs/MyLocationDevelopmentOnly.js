@@ -62,34 +62,21 @@ MyLocationDevelopmentOnlyUseLive = function() {
 }
 
 MyLocationDevelopmentOnlySimulateHttp = function() {
-  MyLocationMockBackend._https = false;
-  MyLocation.useMockBackend();
+  MyLocation.useMockBackendSimulateHttp();
 }
 
 MyLocationDevelopmentOnlySimulatePromptAccept = function() {
-  MyLocationMockBackend._https = true;
-  MyLocationMockBackend._permission = 'prompt';
-  MyLocationMockBackend._userAllow = true;
-  MyLocation.useMockBackend();
+  MyLocation.useMockBackendSimulatePromptAccept();
 }
 
 MyLocationDevelopmentOnlySimulatePromptDeny = function() {
-  MyLocationMockBackend._https = true;
-  MyLocationMockBackend._permission = 'prompt';
-  MyLocationMockBackend._userAllow = false;
-  MyLocation.useMockBackend();
+  MyLocation.useMockBackendSimulatePromptDeny();
 }
 
 MyLocationDevelopmentOnlySimulateGranted = function() {
-  MyLocationMockBackend._https = true;
-  MyLocationMockBackend._permission = 'granted';
-  MyLocationMockBackend._userAllow = true;
-  MyLocation.useMockBackend();
+  MyLocation.useMockBackendSimulateGranted();
 }
 
 MyLocationDevelopmentOnlySimulateDenied = function() {
-  MyLocationMockBackend._https = true;
-  MyLocationMockBackend._permission = 'denied';
-  MyLocationMockBackend._userAllow = false;
-  MyLocation.useMockBackend();
+  MyLocation.useMockBackendSimulateDenied();
 }

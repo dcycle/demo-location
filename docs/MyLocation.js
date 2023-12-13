@@ -6,7 +6,7 @@
  */
 MyLocation = {
   version: function() {
-    return '0.1.0';
+    return '0.2.0';
   },
   /**
    * Customize using a custom UI object to integrate with your web page.
@@ -126,6 +126,34 @@ MyLocation = {
     }
     return this;
   },
+  useMockBackendSimulateHttp: function() {
+    MyLocationMockBackend._https = false;
+    this.useMockBackend();
+  },
+  useMockBackendSimulatePromptAccept: function() {
+    MyLocationMockBackend._https = true;
+    MyLocationMockBackend._permission = 'prompt';
+    MyLocationMockBackend._userAllow = true;
+    this.useMockBackend();
+  },
+  useMockBackendSimulatePromptDeny: function() {
+    MyLocationMockBackend._https = true;
+    MyLocationMockBackend._permission = 'prompt';
+    MyLocationMockBackend._userAllow = false;
+    this.useMockBackend();
+  },
+  useMockBackendSimulateGranted: function() {
+    MyLocationMockBackend._https = true;
+    MyLocationMockBackend._permission = 'granted';
+    MyLocationMockBackend._userAllow = true;
+    this.useMockBackend();
+  },
+  useMockBackendSimulateDenied: function() {
+    MyLocationMockBackend._https = true;
+    MyLocationMockBackend._permission = 'denied';
+    MyLocationMockBackend._userAllow = false;
+    this.useMockBackend();
+  }
 }
 
 /**
